@@ -28,6 +28,7 @@ const controller = (() => {
   let currentPlayer = player1;
 
   const startGame = () => {
+    currentPlayer = player1;
     gameBoard.fillBoard();
     controller.markCell();
   };
@@ -107,6 +108,7 @@ const controller = (() => {
     gameBoard.cells.forEach((cell) => {
       cell.textContent = "";
     });
+    switchPlayer();
   };
 
   return { player1, player2, startGame, markCell };
