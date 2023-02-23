@@ -126,4 +126,12 @@ const controller = (() => {
   return { player1, player2, startGame, markCell };
 })();
 
-controller.startGame();
+const playerVsPlayerButton = document.getElementById("player-player");
+
+playerVsPlayerButton.addEventListener("click", () => {
+  const selectGame = document.getElementById("game-selector");
+  const boardContainer = document.getElementById("main-container");
+  selectGame.style.display = "none";
+  boardContainer.style.display = "flex";
+  controller.startGame();
+});
