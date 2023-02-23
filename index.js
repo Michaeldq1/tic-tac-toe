@@ -12,6 +12,18 @@ const gameBoard = (() => {
   const cells = boardContents.map(createCell);
 
   const fillBoard = () => {
+    cells[0].style.borderTop = "none";
+    cells[0].style.borderLeft = "none";
+    cells[1].style.borderTop = "none";
+    cells[2].style.borderTop = "none";
+    cells[2].style.borderRight = "none";
+    cells[3].style.borderLeft = "none";
+    cells[5].style.borderRight = "none";
+    cells[6].style.borderLeft = "none";
+    cells[6].style.borderBottom = "none";
+    cells[7].style.borderBottom = "none";
+    cells[8].style.borderRight = "none";
+    cells[8].style.borderBottom = "none";
     board.append(...cells);
   };
 
