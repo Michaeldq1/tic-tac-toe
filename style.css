@@ -8,7 +8,6 @@ body {
 .main-container {
   width: 500px;
   height: 500px;
-  border: 2px solid red;
 }
 
 #board {
@@ -20,5 +19,9 @@ body {
 }
 
 .cell {
+  display: flex;
   border: 2px solid black;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
 }
