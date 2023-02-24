@@ -38,6 +38,12 @@ const controller = (() => {
   const player1 = playerFactory("Tom", "X");
   const player2 = playerFactory("Rob", "O");
   let currentPlayer = player1;
+  const winner = document.getElementById("new-game");
+  const winnerPopup = document.getElementById("game-winner");
+  const replayIcon = document.getElementById("replay-icon");
+  const playerVsPlayerButton = document.getElementById("player-player");
+  const selectGame = document.getElementById("game-selector");
+  const boardContainer = document.getElementById("main-container");
 
   const startGame = () => {
     currentPlayer = player1;
@@ -67,51 +73,36 @@ const controller = (() => {
 
   const checkWinner = (mark) => {
     const threeInARow = (cellOne, cellTwo, cellThree) => {
-      if (
+      const isWinner =
         gameBoard.cells[cellOne].textContent === mark &&
         gameBoard.cells[cellTwo].textContent === mark &&
-        gameBoard.cells[cellThree].textContent === mark
-      ) {
-        console.log(currentPlayer.name + " is the winner");
-        return true;
-      } else {
-        return false;
+        gameBoard.cells[cellThree].textContent === mark;
+      if (isWinner) {
+        winnerPopup.style.display = "flex";
+        winner.textContent = `${currentPlayer.mark} wins!`;
       }
+      return isWinner;
     };
 
     const noWinner = (cells) => {
       const checkTie = cells.some((cell) => cell.textContent === "");
-      checkTie === false ? console.log("Tie Game!") : console.log("No tie!");
+      if (checkTie === false) {
+        winnerPopup.style.display = "flex";
+        winner.textContent = "Tie!";
+      }
       return !checkTie;
     };
 
     switch (true) {
       case threeInARow(0, 1, 2):
-        resetBoard();
-        break;
       case threeInARow(3, 4, 5):
-        resetBoard();
-        break;
       case threeInARow(6, 7, 8):
-        resetBoard();
-        break;
       case threeInARow(0, 3, 6):
-        resetBoard();
-        break;
       case threeInARow(1, 4, 7):
-        resetBoard();
-        break;
       case threeInARow(2, 5, 8):
-        resetBoard();
-        break;
       case threeInARow(0, 4, 8):
-        resetBoard();
-        break;
       case threeInARow(2, 4, 6):
-        resetBoard();
-        break;
       case noWinner(gameBoard.cells):
-        resetBoard();
         break;
     }
   };
@@ -120,18 +111,21 @@ const controller = (() => {
     gameBoard.cells.forEach((cell) => {
       cell.textContent = "";
     });
-    switchPlayer();
+    winnerPopup.style.display = "none";
+    startGame();
   };
+
+  replayIcon.addEventListener("click", () => {
+    resetBoard();
+    selectGame.style.display = "flex";
+    boardContainer.style.display = "none";
+  });
+
+  playerVsPlayerButton.addEventListener("click", () => {
+    selectGame.style.display = "none";
+    boardContainer.style.display = "flex";
+    controller.startGame();
+  });
 
   return { player1, player2, startGame, markCell };
 })();
-
-const playerVsPlayerButton = document.getElementById("player-player");
-
-playerVsPlayerButton.addEventListener("click", () => {
-  const selectGame = document.getElementById("game-selector");
-  const boardContainer = document.getElementById("main-container");
-  selectGame.style.display = "none";
-  boardContainer.style.display = "flex";
-  controller.startGame();
-});
