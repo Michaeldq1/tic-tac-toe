@@ -1,6 +1,6 @@
 const gameBoard = (() => {
   const board = document.getElementById("board");
-  const boardContents = ["", "", "", "", "", "", "", "", ""];
+  const boardContents = Array(9).fill("");
 
   const createCell = (content) => {
     const cell = document.createElement("div");
@@ -12,18 +12,24 @@ const gameBoard = (() => {
   const cells = boardContents.map(createCell);
 
   const fillBoard = () => {
-    cells[0].style.borderTop = "none";
-    cells[0].style.borderLeft = "none";
-    cells[1].style.borderTop = "none";
-    cells[2].style.borderTop = "none";
-    cells[2].style.borderRight = "none";
-    cells[3].style.borderLeft = "none";
-    cells[5].style.borderRight = "none";
-    cells[6].style.borderLeft = "none";
-    cells[6].style.borderBottom = "none";
-    cells[7].style.borderBottom = "none";
-    cells[8].style.borderRight = "none";
-    cells[8].style.borderBottom = "none";
+    const borderPositions = [0, 1, 2, 3, 5, 6, 7, 8];
+    cells.forEach((cell, index) => {
+      const isBorderCell = borderPositions.includes(index);
+      if (isBorderCell) {
+        if (index % 3 === 0) {
+          cell.style.borderLeft = "none";
+        }
+        if (index < 3) {
+          cell.style.borderTop = "none";
+        }
+        if (index % 3 === 2) {
+          cell.style.borderRight = "none";
+        }
+        if (index > 5) {
+          cell.style.borderBottom = "none";
+        }
+      }
+    });
     board.append(...cells);
   };
 
@@ -37,13 +43,16 @@ const playerFactory = (name, mark) => {
 const controller = (() => {
   const player1 = playerFactory("Tom", "X");
   const player2 = playerFactory("Rob", "O");
+  const computerPlayer = playerFactory("computer", "O");
   let currentPlayer = player1;
   const winner = document.getElementById("new-game");
   const winnerPopup = document.getElementById("game-winner");
   const replayIcon = document.getElementById("replay-icon");
   const playerVsPlayerButton = document.getElementById("player-player");
-  const selectGame = document.getElementById("game-selector");
+  const gameSelector = document.getElementById("game-selector");
   const boardContainer = document.getElementById("main-container");
+  const playerVsComputerButton = document.getElementById("player-computer");
+  let isVsComputerGame = false;
 
   const startGame = () => {
     currentPlayer = player1;
@@ -51,16 +60,34 @@ const controller = (() => {
     controller.markCell();
   };
 
+  const markCellHandler = (event) => {
+    const cell = event.target;
+    cell.textContent === ""
+      ? (cell.textContent = currentPlayer.mark)
+      : (cell.textContent = cell.textContent);
+    checkWinner(currentPlayer.mark);
+    checkWinner(computerPlayer.mark);
+    if (isVsComputerGame) {
+      computerMove();
+      checkWinner(computerPlayer.mark);
+    } else {
+      switchPlayer();
+    }
+    cell.removeEventListener("click", markCellHandler);
+  };
+
   const markCell = () => {
     gameBoard.cells.forEach((cell) => {
-      cell.addEventListener("click", () => {
-        cell.textContent === ""
-          ? (cell.textContent = currentPlayer.mark)
-          : (cell.textContent = cell.textContent);
-        checkWinner(currentPlayer.mark);
-        switchPlayer();
-      });
+      cell.addEventListener("click", markCellHandler);
     });
+  };
+
+  const computerMove = () => {
+    const openCells = gameBoard.cells
+      .map((cell, index) => (cell.textContent == "" ? index : null))
+      .filter((index) => index != null);
+    let randomCell = openCells[Math.floor(Math.random() * openCells.length)];
+    gameBoard.cells[randomCell].textContent = computerPlayer.mark;
   };
 
   const switchPlayer = () => {
@@ -79,7 +106,7 @@ const controller = (() => {
         gameBoard.cells[cellThree].textContent === mark;
       if (isWinner) {
         winnerPopup.style.display = "flex";
-        winner.textContent = `${currentPlayer.mark} wins!`;
+        winner.textContent = `${mark} wins!`;
       }
       return isWinner;
     };
@@ -117,12 +144,20 @@ const controller = (() => {
 
   replayIcon.addEventListener("click", () => {
     resetBoard();
-    selectGame.style.display = "flex";
+    gameSelector.style.display = "flex";
     boardContainer.style.display = "none";
   });
 
   playerVsPlayerButton.addEventListener("click", () => {
-    selectGame.style.display = "none";
+    isVsComputerGame = false;
+    gameSelector.style.display = "none";
+    boardContainer.style.display = "flex";
+    controller.startGame();
+  });
+
+  playerVsComputerButton.addEventListener("click", () => {
+    isVsComputerGame = true;
+    gameSelector.style.display = "none";
     boardContainer.style.display = "flex";
     controller.startGame();
   });
