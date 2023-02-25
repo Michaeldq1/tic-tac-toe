@@ -1,16 +1,23 @@
+/* Define global variables */
 :root {
   --primary-color: #2d2926ff;
   --secondary-color: #e94b3cff;
 }
 
+/* Set default styles for all elements */
+
 * {
   font-family: "Secular One", sans-serif;
-  font-family: "Tilt Warp", cursive;
   caret-color: transparent;
   margin: 0;
   padding: 0;
 }
+/* Apply special style to all elements except the last one */
+:not(:last-child) {
+  font-family: "Tilt Warp", cursive;
+}
 
+/* Define styles for the body element */
 body {
   height: 100vh;
   display: flex;
@@ -19,6 +26,7 @@ body {
   background-color: var(--primary-color);
 }
 
+/* Define styles for the game selector element */
 #game-selector {
   display: flex;
   flex-direction: column;
@@ -28,12 +36,14 @@ body {
   height: 100%;
 }
 
+/* Define styles for the header and footer elements */
 .header,
 .footer {
   flex: 3;
   width: 100%;
 }
 
+/* Define styles for the header element */
 .header {
   display: flex;
   color: var(--secondary-color);
@@ -43,21 +53,23 @@ body {
   justify-content: center;
 }
 
+/* Define styles for the footer element */
 .footer {
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   color: var(--secondary-color);
 }
 
+/* Define styles for the game winner element */
 #game-winner {
   position: fixed;
   height: 100%;
   width: auto;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 999;
   display: none;
   background-color: rgba(45, 41, 38, 0.9);
@@ -68,6 +80,7 @@ body {
   flex-direction: column;
 }
 
+/* Define styles for the choose game element */
 .choose-game {
   flex: 4;
   display: flex;
@@ -76,11 +89,13 @@ body {
   justify-content: center;
 }
 
+/* Define styles for the new game element */
 #new-game {
   color: var(--secondary-color);
   font-size: 80px;
 }
 
+/* Define styles for the game type element */
 .game-type {
   flex: 1;
   display: flex;
@@ -97,17 +112,20 @@ body {
   align-items: center;
 }
 
+/* Define hover styles for the game type element */
 .game-type:hover {
   color: var(--primary-color);
   background-color: var(--secondary-color);
 }
 
+/* Define styles for the main container element */
 #main-container {
   width: 500px;
   height: 500px;
   display: none;
 }
 
+/* Define styles for the board element */
 #board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -116,6 +134,8 @@ body {
   width: 100%;
 }
 
+/* Define styles for the cell element */
+
 .cell {
   display: flex;
   border: 4px solid var(--secondary-color);
@@ -123,6 +143,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 100px;
+  cursor: pointer;
 }
 
 .material-symbols-outlined {
