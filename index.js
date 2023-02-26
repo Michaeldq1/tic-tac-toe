@@ -45,6 +45,7 @@ const controller = (() => {
   const player2 = playerFactory("Rob", "O");
   const computerPlayer = playerFactory("computer", "O");
   let currentPlayer = player1;
+  let gameWon = false;
   const winner = document.getElementById("new-game");
   const winnerPopup = document.getElementById("game-winner");
   const replayIcon = document.getElementById("replay-icon");
@@ -55,6 +56,7 @@ const controller = (() => {
   let isVsComputerGame = false;
 
   const startGame = () => {
+    gameWon = false;
     currentPlayer = player1;
     gameBoard.fillBoard();
     controller.markCell();
@@ -105,19 +107,18 @@ const controller = (() => {
         gameBoard.cells[cellTwo].textContent === mark &&
         gameBoard.cells[cellThree].textContent === mark;
       if (isWinner) {
+        gameWon = true;
         winnerPopup.style.display = "flex";
         winner.textContent = `${mark} wins!`;
       }
-      return isWinner;
     };
 
     const noWinner = (cells) => {
       const checkTie = cells.some((cell) => cell.textContent === "");
-      if (checkTie === false) {
+      if (!checkTie && !gameWon) {
         winnerPopup.style.display = "flex";
         winner.textContent = "Tie!";
       }
-      return !checkTie;
     };
 
     switch (true) {
@@ -129,8 +130,8 @@ const controller = (() => {
       case threeInARow(2, 5, 8):
       case threeInARow(0, 4, 8):
       case threeInARow(2, 4, 6):
-      case noWinner(gameBoard.cells):
         break;
+      case noWinner(gameBoard.cells):
     }
   };
 
