@@ -17,12 +17,6 @@
     <title>Tic-Tac-Toe</title>
   </head>
   <body>
-    <div id="game-winner">
-      <div id="new-game"></div>
-      <span class="material-symbols-outlined replay-icon" id="replay-icon"
-        >replay</span
-      >
-    </div>
     <div id="game-selector">
       <div class="header">Tic-Tac-Toe</div>
       <div class="choose-game">
@@ -31,8 +25,22 @@
       </div>
       <div class="footer">by Michael Quinton</div>
     </div>
+    <div id="choose-mark">
+      <div class="header">Choose a Mark:</div>
+     <div id="marks">
+        <div class="mark" id="mark-x">X's</div>
+        <div class="mark" id="mark-o">O's</div>
+      </div>
+    </div>
+    </div>
     <div id="main-container">
       <div id="board"></div>
+    </div>
+    <div id="game-winner">
+      <div id="new-game"></div>
+      <span class="material-symbols-outlined replay-icon" id="replay-icon"
+        >replay</span
+      >
     </div>
     <script src="index.js"></script>
   </body>
