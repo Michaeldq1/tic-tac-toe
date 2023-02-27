@@ -80,6 +80,43 @@ body {
   flex-direction: column;
 }
 
+/* Define styles for the choose mark element */
+#choose-mark {
+  position: fixed;
+  height: 100%;
+  width: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  display: none;
+  background-color: rgba(45, 41, 38, 1);
+  color: white;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+}
+
+#marks {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mark {
+  width: 250px;
+  font-size: 80px;
+  color: var(--secondary-color);
+  cursor: pointer;
+}
+
+.mark:hover {
+  opacity: 0.5;
+}
+
 /* Define styles for the choose game element */
 .choose-game {
   flex: 4;
