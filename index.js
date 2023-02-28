@@ -73,8 +73,12 @@ const controller = (() => {
     checkWinner(currentPlayer.mark);
     checkWinner(computerPlayer.mark);
     if (isVsComputerGame) {
-      computerMove();
-      checkWinner(computerPlayer.mark);
+      if (gameWon) {
+        checkWinner(currentPlayer.mark);
+      } else {
+        computerMove();
+        checkWinner(computerPlayer.mark);
+      }
     } else {
       switchPlayer();
     }
