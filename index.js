@@ -52,6 +52,8 @@ const controller = (() => {
   const playerVsPlayerButton = document.getElementById("player-player");
   const gameSelector = document.getElementById("game-selector");
   const chooseMark = document.getElementById("choose-mark");
+  const xMark = document.getElementById("mark-x");
+  const oMark = document.getElementById("mark-o");
   const boardContainer = document.getElementById("main-container");
   const playerVsComputerButton = document.getElementById("player-computer");
   let isVsComputerGame = false;
@@ -160,9 +162,23 @@ const controller = (() => {
   playerVsComputerButton.addEventListener("click", () => {
     isVsComputerGame = true;
     gameSelector.style.display = "none";
-    boardContainer.style.display = "flex";
-    // chooseMark.style.display = "block";
+    chooseMark.style.display = "block";
     controller.startGame();
+  });
+
+  oMark.addEventListener("click", () => {
+    boardContainer.style.display = "flex";
+    chooseMark.style.display = "none";
+    computerPlayer.mark = "X";
+    player1.mark = "O";
+    computerMove();
+  });
+
+  xMark.addEventListener("click", () => {
+    boardContainer.style.display = "flex";
+    chooseMark.style.display = "none";
+    computerPlayer.mark = "O";
+    player1.mark = "X";
   });
 
   return { player1, player2, startGame, markCell };
