@@ -111,7 +111,13 @@ body {
   font-size: 80px;
   color: var(--secondary-color);
   cursor: pointer;
+  transition: font-size 2s;
 }
+
+/* #mark-x,
+#mark-o {
+  transition: font-size 2s;
+} */
 
 .mark:hover {
   opacity: 0.5;

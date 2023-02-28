@@ -146,6 +146,8 @@ const controller = (() => {
     gameBoard.cells.forEach((cell) => {
       cell.textContent = "";
     });
+    player1.mark = "X";
+    player2.mark = "O";
     winnerPopup.style.display = "none";
     startGame();
   };
@@ -183,6 +185,7 @@ const controller = (() => {
     chooseMark.style.display = "none";
     computerPlayer.mark = "O";
     player1.mark = "X";
+    xMark.style.fontSize = "100px";
   });
 
   return { player1, player2, startGame, markCell };
